@@ -1,4 +1,5 @@
 import shutil
+import os
 
 from django.conf import settings
 from django.utils import timezone
@@ -17,4 +18,6 @@ def purge_deleted():
     for build in BuildModel.objects.filter(deleted_at__isnull=False, deleted_at__lt=cutoff_time):
         dir_name = build.get_full_file_storage_directory()
         build.delete()
-        shutil.rmtree(dir_name)
+        if os.path.isdir(dir_name):
+            shutil.rmtree(dir_name)
+
