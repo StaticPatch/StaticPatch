@@ -13,6 +13,8 @@ class SiteModel(models.Model):
     basic_auth_user_required = models.BooleanField(null=False, default=False)
     allow_override = models.BooleanField(null=False, default=False)
     access_file_name = models.CharField(max_length=500, null=False, default=".htaccess")
+    public_info = models.BooleanField(null=False, default=False)
+    public_info_url = models.CharField(max_length=500, null=False, default="/staticpatchsiteinfo")
     active = models.BooleanField(null=False, default=True)
     created_at = models.DateTimeField(auto_now_add=True, null=False)
     deleted_at = models.DateTimeField(null=True)

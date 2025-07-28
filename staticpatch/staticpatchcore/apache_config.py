@@ -59,15 +59,16 @@ class ApacheConfig:
                 if sub_site_build:
                     sub_sites[sub_site.url] = sub_site_build
 
-            if sub_sites and "/staticpatchsiteinfo" not in sub_sites.keys():
+            if site.public_info:
                 site_info_dir = "{}/site/{}/siteinfo".format(settings.FILE_STORAGE, site.id)
                 os.makedirs(site_info_dir, exist_ok=True)
                 site_info_data = {
-                    "sub_sites": {k:{} for k in sub_sites.keys()}
+                    "sub_sites": {k:{"at":v.finished_at.isoformat()} for k,v in sub_sites.items()},
+                    "root_site": {"at":build.finished_at.isoformat()}
                 }
                 with open(os.path.join(site_info_dir, "data.json"), "w") as fp:
                     json.dump(site_info_data, fp, indent=2)
-                sub_sites["/staticpatchsiteinfo"] = "siteinfo"
+                sub_sites[staticpatchcore.models.SubSiteModel.normalise_url(site.public_info_url)] = "siteinfo"
 
             # and generate
             self.__out += self._generate_virtual_host(

@@ -32,6 +32,16 @@
                 <td>{{ site.access_file_name }}</td>
             </tr>
             <tr>
+                <th>Public Info:</th>
+                <td>{{ site.public_info|yesno:"Yes,No" }}</td>
+            </tr>
+            {% if site.public_info %}
+                <tr>
+                    <th>Public Info URL:</th>
+                    <td>{{ site.public_info_url }}</td>
+                </tr>
+            {% endif %}
+            <tr>
                 <th>Active:</th>
                 <td>{{ site.active|yesno:"Yes,No" }}</td>
             </tr>
