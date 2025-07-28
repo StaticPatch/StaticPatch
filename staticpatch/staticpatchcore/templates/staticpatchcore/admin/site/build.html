@@ -13,6 +13,7 @@
                     <th>Finished</th>
                     <th>Failed</th>
                     <th>Preview Instance</th>
+                    <th>Sub Site</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -26,6 +27,13 @@
                         <td>
                             {% if build.site_preview_instance %}
                                 {{ build.site_preview_instance.site_preview_type.slug }} / {{ build.site_preview_instance.slug }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if build.sub_site %}
+                                {{ build.sub_site.url }}
                             {% else %}
                                 -
                             {% endif %}

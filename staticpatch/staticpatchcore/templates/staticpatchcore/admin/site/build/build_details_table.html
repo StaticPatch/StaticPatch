@@ -26,5 +26,17 @@
                 {% endif %}
             </td>
         </tr>
+        <tr>
+            <th>
+                Sub Site:
+            </th>
+            <td>
+                {% if build.sub_site %}
+                    {{ build.sub_site.url }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
     </table>
 </div>
