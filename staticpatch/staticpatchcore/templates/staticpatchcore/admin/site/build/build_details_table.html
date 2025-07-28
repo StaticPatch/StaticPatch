@@ -32,7 +32,7 @@
             </th>
             <td>
                 {% if build.sub_site %}
-                    {{ build.sub_site.url }}
+                    <a href="{% url 'admin_site_sub_site_detail' site.slug build.sub_site.id %}">{{ build.sub_site.url }}</a>
                 {% else %}
                     -
                 {% endif %}
