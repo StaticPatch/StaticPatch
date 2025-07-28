@@ -41,10 +41,7 @@ class ApacheConfig:
             sub_sites = {}
             for sub_site in staticpatchcore.models.SubSiteModel.objects.filter(
                 site=site, deleted_at__isnull=True, active=True
-            ):
-                self.__out += "# --------------------------------------------------- Sub Site {} ({}) \n".format(
-                    sub_site.id, sub_site.url
-                )
+            ):                
                 sub_site_build = (
                     staticpatchcore.models.BuildModel.objects.filter(
                         site=site,
@@ -60,7 +57,7 @@ class ApacheConfig:
                     sub_sites[sub_site.url] = sub_site_build
 
             if site.public_info:
-                site_info_dir = "{}/site/{}/siteinfo".format(settings.FILE_STORAGE, site.id)
+                site_info_dir = "{}/site/{}/publicinfo".format(settings.FILE_STORAGE, site.id)
                 os.makedirs(site_info_dir, exist_ok=True)
                 site_info_data = {
                     "sub_sites": {k:{"at":v.finished_at.isoformat()} for k,v in sub_sites.items()},
@@ -68,7 +65,7 @@ class ApacheConfig:
                 }
                 with open(os.path.join(site_info_dir, "data.json"), "w") as fp:
                     json.dump(site_info_data, fp, indent=2)
-                sub_sites[staticpatchcore.models.SubSiteModel.normalise_url(site.public_info_url)] = "siteinfo"
+                sub_sites[staticpatchcore.models.SubSiteModel.normalise_url(site.public_info_url)] = "publicinfo"
 
             # and generate
             self.__out += self._generate_virtual_host(
