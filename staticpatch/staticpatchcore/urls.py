@@ -114,6 +114,11 @@ urlpatterns = [
         name="publish_built_site",
     ),
     path(
+        "api/site/<slug:site_slug>/deactivate",
+        views_api.api_deactivate_view,
+        name="api_deactivate",
+    ),
+    path(
         "api/site/<slug:site_slug>/preview/<slug:preview_type_slug>/instance/<slug:preview_instance_slug>"
         + "/publish_built_site",
         views_api.api_publish_built_site_preview_instance_view,
