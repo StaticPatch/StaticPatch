@@ -69,6 +69,7 @@ class ApacheConfig:
                     json.dump(site_info_data, fp, indent=2)
                 sub_sites["/staticpatchsiteinfo"] = "siteinfo"
 
+            # and generate
             self.__out += self._generate_virtual_host(
                 site,
                 build,
