@@ -9,5 +9,36 @@
         <tr><th>Active</th><td>{{ sub_site.active|yesno:"Yes,No" }}</td></tr>
         <tr><th>Created At</th><td>{{ sub_site.created_at }}</td></tr>
     </table>
+    <h2>Builds for this Sub Site</h2>
+    <div class="build-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Created</th>
+                    <th>Started</th>
+                    <th>Finished</th>
+                    <th>Failed</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for build in builds %}
+                    <tr>
+                        <td>{{ build.created_at|date:"Y-m-d H:i:s" }}</td>
+                        <td>{{ build.started_at|date:"Y-m-d H:i:s"|default:"-" }}</td>
+                        <td>{{ build.finished_at|date:"Y-m-d H:i:s"|default:"-" }}</td>
+                        <td>{{ build.failed_at|date:"Y-m-d H:i:s"|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'admin_site_build_detail' site.slug build.id %}">Details</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7">No builds found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     <p><a href="{% url 'admin_site_detail' site.slug %}">Back to Site</a></p>
 {% endblock %} 

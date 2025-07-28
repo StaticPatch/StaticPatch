@@ -354,8 +354,9 @@ def admin_site_edit_alternative_domain_view(request, site_slug, alternative_doma
 def admin_site_sub_site_detail_view(request, site_slug, sub_site_id):
     site = get_object_or_404(staticpatchcore.models.SiteModel, slug=site_slug, deleted_at__isnull=True)
     sub_site = get_object_or_404(staticpatchcore.models.SubSiteModel, id=sub_site_id, site=site, deleted_at__isnull=True)
+    builds = staticpatchcore.models.BuildModel.objects.filter(sub_site=sub_site, deleted_at__isnull=True).order_by('-created_at')
     return render(
         request,
         "staticpatchcore/admin/site/sub_site/index.html",
-        {"site": site, "sub_site": sub_site},
+        {"site": site, "sub_site": sub_site, "builds": builds},
     )
