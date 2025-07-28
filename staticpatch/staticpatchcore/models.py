@@ -76,6 +76,16 @@ class SubSiteModel(models.Model):
     active = models.BooleanField(null=False, default=True)
     deleted_at = models.DateTimeField(null=True)
 
+    def _pre_save(self):
+        if self.url.endswith("/"):
+            self.url = self.url[:-1]
+        if not self.url.startswith("/"):
+            self.url = "/" + self.url
+
+    def save(self, **kwargs):
+        self._pre_save()
+        super().save(**kwargs)
+
     class Meta:
         constraints = [
             models.UniqueConstraint(
