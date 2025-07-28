@@ -1,0 +1,13 @@
+{% extends 'staticpatchcore/base.html' %}
+
+{% block title %}Sub Site: {{ sub_site.url }} - {{ site.slug }} - StaticPatch{% endblock %}
+
+{% block content %}
+    <h1>Sub Site: {{ sub_site.url }}</h1>
+    <table>
+        <tr><th>URL</th><td>{{ sub_site.url }}</td></tr>
+        <tr><th>Active</th><td>{{ sub_site.active|yesno:"Yes,No" }}</td></tr>
+        <tr><th>Created At</th><td>{{ sub_site.created_at }}</td></tr>
+    </table>
+    <p><a href="{% url 'admin_site_detail' site.slug %}">Back to Site</a></p>
+{% endblock %} 

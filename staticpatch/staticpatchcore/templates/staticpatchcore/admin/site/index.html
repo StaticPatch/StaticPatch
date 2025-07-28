@@ -42,6 +42,34 @@
         </table>
     </div>
 
+    <h2>Sub Sites</h2>
+    <div class="sub-sites">
+        <table>
+            <thead>
+                <tr>
+                    <th>URL</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sub_site in sub_sites %}
+                <tr>
+                    <td>{{ sub_site.url }}</td>
+                    <td>{{ sub_site.active|yesno:"Yes,No" }}</td>
+                    <td>
+                        <a href="{% url 'admin_site_sub_site_detail' site.slug sub_site.id %}" class="button">View</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No sub sites found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
     <h2>Alternative Domains</h2>
     <div class="alternative-domains">
         <p><a href="{% url 'admin_site_new_alternative_domain' site.slug %}" class="button">➕ Add Alternative Domain</a></p>
