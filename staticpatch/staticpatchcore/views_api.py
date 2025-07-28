@@ -33,8 +33,18 @@ def api_publish_built_site_view(request, site_slug):
     except staticpatchcore.models.SiteSecurityKeyModel.DoesNotExist:
         return HttpResponse("Access Denied", status=403)
 
+    # Get sub site (optional)
+    sub_site = None
+    sub_site_url = request.POST.get("sub_site_url")
+    if sub_site_url:
+        try:
+            sub_site = staticpatchcore.models.SubSiteModel.objects.get(site=site, url=staticpatchcore.models.SubSiteModel.normalise_url(sub_site_url), active=True, deleted_at__isnull=True)
+        except staticpatchcore.models.SubSiteModel.DoesNotExist:
+            sub_site = staticpatchcore.models.SubSiteModel(site=site, url=staticpatchcore.models.SubSiteModel.normalise_url(sub_site_url), active=True)
+            sub_site.save()
+
     # Save Build
-    build = staticpatchcore.models.BuildModel(site=site)
+    build = staticpatchcore.models.BuildModel(site=site, sub_site=sub_site)
     build.save()
 
     os.makedirs(build.get_full_file_storage_directory())
